@@ -24,7 +24,6 @@ module Spree
           jqPlot/excanvas.min.js
           spree/backend/images/new.js
           jquery.jstree/themes/spree/*
-          fontawesome-webfont*
           select2_locale*
           jquery.alerts/images/*
         ]
