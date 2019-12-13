@@ -77,7 +77,7 @@ module Spree
       after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
 
       after_transition do |shipment, transition|
-        shipment.state_changes.create!(
+        shipment.state_changes.create(
           previous_state: transition.from,
           next_state:     transition.to,
           name:           'shipment',
