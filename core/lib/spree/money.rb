@@ -19,6 +19,9 @@ module Spree
 
     def initialize(amount, options={})
       @money = Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
+      if options.has_key?(:html)
+        options[:html_wrap] = options.delete(:html)
+      end
       @options = Spree::Money.default_formatting_rules.merge(options)
     end
 
@@ -26,9 +29,12 @@ module Spree
       @money.format(@options)
     end
 
-    def to_html(options = { html: true })
-      output = @money.format(@options.merge(options))
+    def to_html(options = { html_wrap: true })
       if options[:html]
+        options[:html_wrap] = options.delete(:html)
+      end
+      output = @money.format(@options.merge(options))
+      if options[:html_wrap]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
         output = output.sub(" ", "&nbsp;").html_safe
